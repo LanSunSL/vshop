@@ -2,8 +2,10 @@ package cn.mldn.vshop.action.front;
 
 import cn.mldn.util.factory.Factory;
 import cn.mldn.util.web.ModelAndView;
+import cn.mldn.util.web.ServletObjectUtil;
 import cn.mldn.vshop.service.front.IMemberServiceFront;
 import cn.mldn.vshop.util.action.AbstractBaseAction;
+import cn.mldn.vshop.util.cookie.RememberMeUtil;
 import cn.mldn.vshop.vo.Member;
 
 public class MemberCenterActionFront extends AbstractBaseAction {
@@ -39,9 +41,9 @@ public class MemberCenterActionFront extends AbstractBaseAction {
 		if (super.isRoleAndAction("info","info:edit")) {
 			try {
 				if (memberService.editBase(vo)) {
-					super.setUrlAndMsg("membercenter.edit.action", "action.edit.success", MEMBER_FLAG);
+					super.setUrlAndMsg("membercenter.edit.action", "action.edit.success",MEMBER_FLAG);
 				} else {
-					super.setUrlAndMsg("membercenter.edit.action", "action.edit.failure", MEMBER_FLAG);
+					super.setUrlAndMsg("membercenter.edit.action", "action.edit.failure",MEMBER_FLAG);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -50,5 +52,25 @@ public class MemberCenterActionFront extends AbstractBaseAction {
 			super.setUrlAndMsg("index.page", "unaction.msg");
 		}
 		return super.getUrl("forward.front.page");
+	}
+	
+	public String editPassword(String oldpassword, String newpassword) {
+		if (super.isRoleAndAction("info","info:password")) {
+			try {
+				if (memberService.editPassword(super.getMid(), oldpassword, newpassword)) {
+					RememberMeUtil rmu = new RememberMeUtil(ServletObjectUtil.getRequest(), ServletObjectUtil.getResponse());
+					rmu.clear();
+					ServletObjectUtil.getSession().invalidate();
+					super.setUrlAndMsg("login.page", "password.edit.success");
+				} else {
+					super.setUrlAndMsg("membercenter.editpassword.page", "password.edit.failure");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			super.setUrlAndMsg("index.page", "unaction.msg");
+		}
+		return super.getUrl("forward.front.page") ;
 	}
 }

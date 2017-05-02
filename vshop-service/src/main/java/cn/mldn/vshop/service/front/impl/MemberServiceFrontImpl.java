@@ -140,4 +140,12 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 		return memberDAO.doUpdateBase(vo);
 	}
 
+	@Override
+	public boolean editPassword(String mid, String oldpassword, String newpassword) throws Exception {
+		if (memberDAO.findLogin(mid, oldpassword) != null) {
+			return memberDAO.doUpdatePassword(mid, newpassword);
+		}
+		return false;
+	}
+
 }

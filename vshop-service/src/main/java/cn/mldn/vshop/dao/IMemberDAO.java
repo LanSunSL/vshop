@@ -30,4 +30,12 @@ public interface IMemberDAO extends IBaseDAO<String, Member> {
 	 * @throws SQLException	SQL异常
 	 */
 	public boolean doUpdateBase(Member vo) throws SQLException;
+	/**
+	 * 修改用户密码
+	 * @param mid	要修改的用户id
+	 * @param newpassword	新的密码
+	 * @return	修改成功返回true，否则false
+	 * @throws SQLException	SQL异常
+	 */
+	public boolean doUpdatePassword(String mid, String password) throws SQLException;
 }
