@@ -1,11 +1,46 @@
 package cn.mldn.vshop.util.action;
 
 import java.io.IOException;
+import java.util.Set;
 
 import cn.mldn.util.action.ActionMessageUtil;
 import cn.mldn.util.web.ServletObjectUtil;
 
 public abstract class AbstractBaseAction {
+	/**
+	 * 验证用户是否具备角色
+	 * @param role 要验证的角色
+	 * @return 具备该角色返回true，否则false
+	 */
+	public boolean isRole(String role) {
+		Set<String> roles = (Set<String>) ServletObjectUtil.getSession().getAttribute("allRoles");
+		return roles.contains(role);
+	}
+	/**
+	 * 验证用户是否具备权限
+	 * @param action	要验证的权限
+	 * @return	具备该权限返回true，否则false
+	 */
+	public boolean isAction(String action) {
+		Set<String> actions = (Set<String>) ServletObjectUtil.getSession().getAttribute("allActions");
+		return actions.contains(action);
+	}
+	/**
+	 * 验证是否具备角色和权限
+	 * @param role	要验证的角色
+	 * @param action	要验证的权限
+	 * @return	同时具备角色和权限则返回true，否则false
+	 */
+	public boolean isRoleAndAction(String role, String action) {
+		return isRole(role) && isAction(action);
+	}
+	/**
+	 * 从session中取得当前登录用户id
+	 * @return 用户id
+	 */
+	public String getMid() {
+		return (String) ServletObjectUtil.getSession().getAttribute("mid");
+	}
 	/**
 	 * 取得路径信息，通过ActionMessageUtil.getUrl()方法获得
 	 * 
@@ -19,10 +54,11 @@ public abstract class AbstractBaseAction {
 	 * 通过Request属性范围设置msg与url两个参数的内容
 	 * @param urlKey url参数的key
 	 * @param msgKey msg参数的key
+	 * @param param msg参数的占位符
 	 */
-	public void setUrlAndMsg(String urlKey,String msgKey) {
+	public void setUrlAndMsg(String urlKey,String msgKey, Object...param) {
 		ServletObjectUtil.getRequest().setAttribute("url", this.getUrl(urlKey));
-		ServletObjectUtil.getRequest().setAttribute("msg", this.getMsg(msgKey));
+		ServletObjectUtil.getRequest().setAttribute("msg", this.getMsg(msgKey, param));
 	}
 
 	/**

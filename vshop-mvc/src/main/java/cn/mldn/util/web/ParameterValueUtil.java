@@ -204,18 +204,26 @@ public class ParameterValueUtil {
 				.getAttribute(LocalVariableAttribute.tag); // 取得属性的标签（名称）
 		Object dataObj[] = new Object[params.length];// 返回的数组的内容
 		// 必须要考虑到方法上会带有static标志的问题，所以必须确定开始点
-		int pos = Modifier.isStatic(ctMethod.getModifiers()) ? 0 : 1;
+		int pos = Modifier.isStatic(ctMethod.getModifiers()) ? 0 : 2;
+//		System.out.println("[pos]" + pos);
+//		for (int i = 0 ; i < attribute.length(); i ++) {
+//			System.out.println("***" + attribute.variableName(i));
+//		}
 		for (int x = 0; x < params.length; x++) {
 			String paramName = attribute.variableName(x + pos); // 取得参数名称
 			String paramType = params[x].getName(); // 取得参数类型
+//			System.out.println("paramName:" + paramName + ", paramType:" + paramType);
 			if (isBasic(paramType)) {
 				dataObj[x] = getBasicParameterValue(paramName, paramType); // 保存数据到数组之中
+			
 			} else if (isArray(params[x].getSimpleName())) { // 现在接收的类型是一个数组
 				dataObj[x] = getArrayParameterValue(paramName,
 						params[x].getSimpleName());
 			} else {
 				dataObj[x] = getObjectParameterValue(params[x]);
+//				System.out.println("paramValue:" + dataObj[x]);
 			}
+			
 		}
 		return dataObj;
 	}

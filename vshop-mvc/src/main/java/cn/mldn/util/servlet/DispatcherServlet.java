@@ -48,6 +48,7 @@ public class DispatcherServlet extends HttpServlet {
 			try {
 				// DispatcherServlet程序类只是负责有数据跳转操作。
 				urlFlag = ActionBeanUtil.actionHandle(urlResult);
+//				System.out.println(urlFlag);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

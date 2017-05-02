@@ -1,5 +1,6 @@
 cn\mldn\vshop\action\front\IndexActionFront.class
 cn\mldn\vshop\util\cookie\RememberMeUtil.class
+cn\mldn\vshop\action\front\MemberCenterActionFront.class
 cn\mldn\vshop\action\front\CheckRandomActionFront.class
 cn\mldn\vshop\filter\LoginFilter.class
 cn\mldn\vshop\util\action\AbstractBaseAction.class

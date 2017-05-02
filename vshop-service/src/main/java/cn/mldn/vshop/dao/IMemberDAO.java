@@ -23,4 +23,11 @@ public interface IMemberDAO extends IBaseDAO<String, Member> {
 	 * @throws SQLException 通过PreparedStatement执行操作返回的是SQL异常，看见SQL异常就查数据层代码
 	 */
 	public Member findLogin(String mid,String password) throws SQLException ; 
+	/**
+	 * 修改用户基本信息：包括name，phone，email
+	 * @param mid	要修改的用户信息的vo类对象
+	 * @return	修改成功返回true，否则false
+	 * @throws SQLException	SQL异常
+	 */
+	public boolean doUpdateBase(Member vo) throws SQLException;
 }

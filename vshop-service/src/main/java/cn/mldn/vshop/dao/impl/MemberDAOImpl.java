@@ -171,5 +171,16 @@ public class MemberDAOImpl extends AbstractDAO implements IMemberDAO {
 		return 0;
 	}
 
+	@Override
+	public boolean doUpdateBase(Member vo) throws SQLException {
+		String sql = "UPDATE member SET name=?,phone=?,email=? WHERE mid=?";
+		super.pstmt = super.conn.prepareStatement(sql);
+		super.pstmt.setString(1, vo.getName());
+		super.pstmt.setString(2, vo.getPhone());
+		super.pstmt.setString(3, vo.getEmail());
+		super.pstmt.setString(4, vo.getMid());
+		return super.pstmt.executeUpdate() > 0;
+	}
+
 
 }

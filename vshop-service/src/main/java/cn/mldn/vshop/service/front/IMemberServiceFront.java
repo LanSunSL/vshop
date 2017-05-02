@@ -90,4 +90,19 @@ public interface IMemberServiceFront {
 	 * @throws Exception SQL异常
 	 */
 	public Map<String,Object> login(String mid,String password) throws Exception ;
+	/**
+	 * 根据用户id取得用户信息
+	 * @param mid 用户id
+	 * @return	vo类对象
+	 * @throws Exception SQL异常
+	 */
+	public Member getEditBasePre(String mid) throws Exception ;
+	/**
+	 * 修改用户信息，包括name，phone，email
+	 * @param vo 包含要修改信息的vo类对象
+	 * @return	修改成功返回true，否则false
+	 * @throws Exception	SQL异常
+	 */
+	public boolean editBase(Member vo) throws Exception;
+	
 }
