@@ -17,9 +17,9 @@ import cn.mldn.vshop.vo.Member;
 import cn.mldn.vshop.vo.MemberLogs;
 
 public class MemberServiceFrontImpl extends AbstractService implements IMemberServiceFront {
+	private IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 	@Override
 	public boolean checkMid(String mid) throws Exception {
-		IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 		return memberDAO.findById(mid) == null ;
 	}
 	
@@ -29,7 +29,6 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 			if (rids == null || rids.size() == 0) {	// 没有角色不应该创建用户
 				return false ;
 			}
-			IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 			if (memberDAO.doUpdate(vo)) { // 保存用户数据
 				IRoleDAO roleDAO = Factory.getDAOInstance("role.dao");
 				if (roleDAO.doRemoveMemberRole(vo.getMid())) {
@@ -47,7 +46,6 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 			IRoleDAO roleDAO = Factory.getDAOInstance("role.dao") ;
 			map.put("allRoles", roleDAO.findAll()) ;
 			map.put("memberRoles", roleDAO.findAllByMember(editMid)) ;
-			IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 			map.put("member", memberDAO.findById(editMid)) ; 
 		}
 		return map;
@@ -57,7 +55,6 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 	public Map<String, Object> list(String mid, int currentPage, int lineSize,
 			String column, String keyWord) throws Exception {
 		if (super.exists(mid, "member:list")) {
-			IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 			Map<String,Object> map = new HashMap<String,Object>() ;
 			if (column == null || keyWord == null || "".equals(column) || "".equals(keyWord)) {
 				map.put("allMembers",memberDAO.findAllSplit(currentPage, lineSize)) ;
@@ -87,7 +84,6 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 		rids.add(6) ;
 		rids.add(7) ;
 		rids.add(8) ;
-		IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 		Member result =  memberDAO.findById(vo.getMid()) ;
 		if (result == null) {
 			vo.setRegdate(new Date());	// 注册日期为当前日期
@@ -104,7 +100,6 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 	@Override
 	public Map<String, Object> login(String mid, String password)
 			throws Exception {
-		IMemberDAO memberDAO = Factory.getDAOInstance("member.dao") ;
 		Map<String, Object> map = new HashMap<String, Object>();
 		// 这个时候的Member类对象result包含有上次登录日期、用户的锁定状态
 		Member result = memberDAO.findLogin(mid, password) ;
@@ -133,6 +128,16 @@ public class MemberServiceFrontImpl extends AbstractService implements IMemberSe
 			}
 		} 
 		return map; 
+	}
+
+	@Override
+	public Member getEditBasePre(String mid) throws Exception {
+		return memberDAO.findById(mid);
+	}
+
+	@Override
+	public boolean editBase(Member vo) throws Exception {
+		return memberDAO.doUpdateBase(vo);
 	}
 
 }

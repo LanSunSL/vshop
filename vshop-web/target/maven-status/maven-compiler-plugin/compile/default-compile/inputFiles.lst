@@ -3,6 +3,7 @@ E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\action\front\IndexAc
 E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\action\front\UploadAction.java
 E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\action\front\MemberLoginActionFront.java
 E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\util\action\AbstractBaseAction.java
+E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\action\front\MemberCenterActionFront.java
 E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\filter\EncodingFilter.java
 E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\util\RandomCode.java
 E:\mygitpro\vshop-256\vshop-web\src\main\java\cn\mldn\vshop\filter\CookieFilter.java
