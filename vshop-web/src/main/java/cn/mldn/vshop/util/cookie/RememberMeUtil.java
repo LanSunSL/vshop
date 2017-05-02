@@ -30,7 +30,7 @@ public class RememberMeUtil {
 	}
 	/**
 	 * 数组的第一个元素是用户名，第二个元素是密码
-	 * @return
+	 * @return 数组
 	 */
 	public String[] loadRemember() {
 		Cookie c[] = this.request.getCookies() ;	// 取得全部的Cookie的数据
