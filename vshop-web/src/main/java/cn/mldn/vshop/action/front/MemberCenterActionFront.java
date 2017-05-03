@@ -1,9 +1,12 @@
 package cn.mldn.vshop.action.front;
 
+import cn.mldn.util.enctype.PasswordUtil;
 import cn.mldn.util.factory.Factory;
 import cn.mldn.util.web.ModelAndView;
+import cn.mldn.util.web.ServletObjectUtil;
 import cn.mldn.vshop.service.front.IMemberServiceFront;
 import cn.mldn.vshop.util.action.AbstractBaseAction;
+import cn.mldn.vshop.util.cookie.RememberMeUtil;
 import cn.mldn.vshop.vo.Member;
 
 public class MemberCenterActionFront extends AbstractBaseAction {
@@ -39,9 +42,9 @@ public class MemberCenterActionFront extends AbstractBaseAction {
 		if (super.isRoleAndAction("info","info:edit")) {
 			try {
 				if (memberService.editBase(vo)) {
-					super.setUrlAndMsg("membercenter.edit.action", "action.edit.success", MEMBER_FLAG);
+					super.setUrlAndMsg("membercenter.edit.action", "action.edit.success",MEMBER_FLAG);
 				} else {
-					super.setUrlAndMsg("membercenter.edit.action", "action.edit.failure", MEMBER_FLAG);
+					super.setUrlAndMsg("membercenter.edit.action", "action.edit.failure",MEMBER_FLAG);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -50,5 +53,31 @@ public class MemberCenterActionFront extends AbstractBaseAction {
 			super.setUrlAndMsg("index.page", "unaction.msg");
 		}
 		return super.getUrl("forward.front.page");
+	}
+	
+	public String editPassword(String oldpassword, String newpassword) {
+		System.out.println("oldpassword:"+oldpassword+",newpassword:"+newpassword);
+		if (super.isRoleAndAction("info","info:password")) {
+			oldpassword = PasswordUtil.getPassword(oldpassword);
+			newpassword = PasswordUtil.getPassword(newpassword);
+			System.out.println("oldpassword:"+oldpassword+",newpassword:"+newpassword);
+			try {
+				if (memberService.editPassword(super.getMid(), oldpassword, newpassword)) {
+					
+					super.setUrlAndMsg("login.page", "password.edit.success");
+					System.out.println("88888888888888");
+					new RememberMeUtil(ServletObjectUtil.getRequest(), ServletObjectUtil.getResponse()).clear();
+					ServletObjectUtil.getSession().invalidate();
+				} else {
+					super.setUrlAndMsg("membercenter.editpassword.page", "password.edit.failure");
+					System.out.println("0000000000000");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			super.setUrlAndMsg("index.page", "unaction.msg");
+		}
+		return super.getUrl("forward.front.page") ;
 	}
 }

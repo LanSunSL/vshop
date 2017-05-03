@@ -24,9 +24,6 @@ public class ActionBeanUtil {
 			retObj = actionMethod.invoke(actionObject) ;	// 没有参数调用
 		} else {	// 有参数，首先根据参数名称取得方法的内容
 			Object methodValue [] = ParameterValueUtil.getMethodParameter(actionClass, actionMethod) ;
-//			for (int i = 0 ; i < methodValue.length; i ++) {
-//				System.out.println(methodValue[i]);
-//			}
 			retObj = actionMethod.invoke(actionObject, methodValue) ;
 		}
 		if (retObj instanceof ModelAndView) {

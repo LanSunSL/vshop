@@ -24,20 +24,20 @@ public class MemberDAOImpl extends AbstractDAO implements IMemberDAO {
 	
 	@Override
 	public Member findLogin(String mid, String password) throws SQLException {
+		Member vo = null ;
 		String sql = "SELECT name,lastdate,locked FROM member WHERE mid=? AND password=?" ;
 		super.pstmt = super.conn.prepareStatement(sql) ;
 		super.pstmt.setString(1, mid);
 		super.pstmt.setString(2, password);
 		ResultSet rs = super.pstmt.executeQuery() ;
 		if (rs.next()) {
-			Member vo = new Member() ;
+			vo = new Member() ;
 			vo.setName(rs.getString(1));
 			vo.setLastdate(rs.getDate(2));
 			vo.setLocked(rs.getInt(3));
 			vo.setMid(mid); 	// 将mid设置到VO对象里面
-			return vo ;
 		}
-		return null;
+		return vo ;
 	}
 	@Override
 	public boolean doCreate(Member vo) throws SQLException {
@@ -179,6 +179,15 @@ public class MemberDAOImpl extends AbstractDAO implements IMemberDAO {
 		super.pstmt.setString(2, vo.getPhone());
 		super.pstmt.setString(3, vo.getEmail());
 		super.pstmt.setString(4, vo.getMid());
+		return super.pstmt.executeUpdate() > 0;
+	}
+
+	@Override
+	public boolean doUpdatePassword(String mid, String password) throws SQLException {
+		String sql = "UPDATE member SET password=? WHERE mid=?";
+		super.pstmt = super.conn.prepareStatement(sql);
+		super.pstmt.setString(1, password);
+		super.pstmt.setString(2,mid);
 		return super.pstmt.executeUpdate() > 0;
 	}
 

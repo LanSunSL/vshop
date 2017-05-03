@@ -5,11 +5,13 @@ import cn.mldn.vshop.util.action.AbstractBaseAction;
 
 public class CheckRandomActionFront extends AbstractBaseAction {
 	public void check(String code) {
-		String rand = (String) ServletObjectUtil.getSession().getAttribute("rand") ;
-		if (rand == null) {
-			super.print(false);
-		} else {
-			super.print(rand.equalsIgnoreCase(code));
-		}
+		try {
+			String rand = (String) ServletObjectUtil.getSession().getAttribute("rand") ;
+			if (rand == null) {
+				super.print(false);
+			} else {
+				super.print(rand.equalsIgnoreCase(code));
+			}
+		} catch(Exception e){}
 	}
 }

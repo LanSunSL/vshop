@@ -104,5 +104,15 @@ public interface IMemberServiceFront {
 	 * @throws Exception	SQL异常
 	 */
 	public boolean editBase(Member vo) throws Exception;
+	/**
+	 * 1. 验证用户原密码是否正确<br>
+	 * 2. 修改新密码<br>
+	 * @param mid	要修改密码的用户id
+	 * @param oldpassword	旧密码
+	 * @param newpassword	新密码
+	 * @return	修改成功返回true，否则false
+	 * @throws Exception	SQL异常
+	 */
+	public boolean editPassword(String mid, String oldpassword, String newpassword) throws Exception;
 	
 }
