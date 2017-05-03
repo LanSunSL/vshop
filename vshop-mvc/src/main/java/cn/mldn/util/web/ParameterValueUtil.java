@@ -211,9 +211,9 @@ public class ParameterValueUtil {
 //		int startIndex = getStartIndex(attribute);
 		//取得参数名称的方法有问题：如何确认参数的index？
 		for (int x = 0; x < params.length; x++) {
-			String paramName = attribute.variableName(x + pos ); // 取得参数名称
+			String paramName = attribute.variableName(x + pos + 1); // 取得参数名称
 			String paramType = params[x].getName(); // 取得参数类型
-			System.out.println("[第"+(x+1)+"个参数]"+paramName+"<==>"+paramType);
+			
 			if (isBasic(paramType)) {
 				dataObj[x] = getBasicParameterValue(paramName, paramType); // 保存数据到数组之中
 			} else if (isArray(params[x].getSimpleName())) { // 现在接收的类型是一个数组
@@ -222,7 +222,7 @@ public class ParameterValueUtil {
 			} else {
 				dataObj[x] = getObjectParameterValue(params[x]);
 			}
-			
+			System.out.println("[第"+(x+1)+"个参数]"+paramName+"<==>"+paramType+"<==>"+dataObj[x]);
 		}
 		return dataObj;
 	}
